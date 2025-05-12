@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Registration Form</title>
+  <style>
+    label { display: block; margin-top: 10px; }
+    span { color: red; font-size: 13px; margin-left: 5px; }
+  </style>
+</head>
+<body>
+  <h2>Registration Form</h2>
+  <form id="regForm" onsubmit="return validateForm()">
+    <label>User ID:
+      <input type="text" id="userid">
+      <span id="useridErr"></span>
+    </label>
+
+    <label>Password:
+      <input type="password" id="password">
+      <span id="passwordErr"></span>
+    </label>
+
+    <label>Name:
+      <input type="text" id="name">
+      <span id="nameErr"></span>
+    </label>
+
+    <label>Address:
+      <input type="text" id="address">
+      <span>(Optional)</span>
+    </label>
+
+    <label>Country:
+      <select id="country">
+        <option value="">(Please select a country)</option>
+        <option value="India">India</option>
+        <option value="USA">USA</option>
+        <option value="UK">UK</option>
+      </select>
+      <span id="countryErr"></span>
+    </label>
+
+    <label>ZIP Code:
+      <input type="text" id="zip">
+      <span id="zipErr"></span>
+    </label>
+
+    <label>Email:
+      <input type="text" id="email">
+      <span id="emailErr"></span>
+    </label>
+
+    <label>Sex:
+      <input type="radio" name="sex" value="Male"> Male
+      <input type="radio" name="sex" value="Female"> Female
+      <span id="sexErr"></span>
+    </label>
+
+    <label>Language:
+      <input type="checkbox" name="lang" value="English"> English
+      <input type="checkbox" name="lang" value="Non English"> Non English
+      <span id="langErr"></span>
+    </label>
+
+    <label>About:
+      <textarea id="about" rows="4" cols="40"></textarea>
+      <span>(Optional)</span>
+    </label>
+
+    <br><br>
+    <input type="submit" value="Submit">
+  </form>
+
+  <script>
+    function validateForm() {
+      let isValid = true;
+
+      // Clear all error messages
+      document.querySelectorAll("span[id$='Err']").forEach(el => el.innerText = "");
+
+      // User ID
+      const userId = document.getElementById("userid").value;
+      if (userId.length < 5 || userId.length > 12) {
+        document.getElementById("useridErr").innerText = "Required and must be of length 5 to 12.";
+        isValid = false;
+      }
+
+      // Password
+      const password = document.getElementById("password").value;
+      if (password.length < 7 || password.length > 12) {
+        document.getElementById("passwordErr").innerText = "Required and must be of length 7 to 12.";
+        isValid = false;
+      }
+
+      // Name
+      const name = document.getElementById("name").value;
+      if (!/^[A-Za-z\s]+$/.test(name)) {
+        document.getElementById("nameErr").innerText = "Required and alphabets only.";
+        isValid = false;
+      }
+
+      // Country
+      const country = document.getElementById("country").value;
+      if (country === "") {
+        document.getElementById("countryErr").innerText = "Required. Must select a country.";
+        isValid = false;
+      }
+
+      // ZIP Code
+      const zip = document.getElementById("zip").value;
+      if (!/^\d+$/.test(zip)) {
+        document.getElementById("zipErr").innerText = "Required. Must be numeric only.";
+        isValid = false;
+      }
+
+      // Email
+      const email = document.getElementById("email").value;
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        document.getElementById("emailErr").innerText = "Required. Must be a valid email.";
+        isValid = false;
+      }
+
+      // Sex
+      const sex = document.querySelector('input[name="sex"]:checked');
+      if (!sex) {
+        document.getElementById("sexErr").innerText = "Required.";
+        isValid = false;
+      }
+
+      // Language
+      const langs = document.querySelectorAll('input[name="lang"]:checked');
+      if (langs.length === 0) {
+        document.getElementById("langErr").innerText = "Required.";
+        isValid = false;
+      }
+
+      return isValid;
+    }
+  </script>
+</body>
+</html>
