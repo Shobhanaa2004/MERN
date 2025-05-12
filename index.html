@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Online Examination Portal</title>
+  <style>
+    body { font-family: Arial; padding: 20px; max-width: 700px; margin: auto; }
+    h2 { color: #333; }
+    .question { margin-bottom: 20px; }
+    .result { margin-top: 30px; font-weight: bold; }
+    label { display: block; margin-bottom: 5px; }
+  </style>
+</head>
+<body>
+
+  <h2>Online Examination Portal</h2>
+
+  <form id="examForm">
+    <label>Name: <input type="text" id="name" required></label>
+    <label>Register Number: <input type="text" id="regNo" required></label>
+
+    <div class="question">
+      <p>1. What is the capital of France?</p>
+      <label><input type="radio" name="q1" value="Paris"> Paris</label>
+      <label><input type="radio" name="q1" value="London"> London</label>
+      <label><input type="radio" name="q1" value="Rome"> Rome</label>
+    </div>
+
+    <div class="question">
+      <p>2. 2 + 2 = ?</p>
+      <label><input type="radio" name="q2" value="3"> 3</label>
+      <label><input type="radio" name="q2" value="4"> 4</label>
+      <label><input type="radio" name="q2" value="5"> 5</label>
+    </div>
+
+    <div class="question">
+      <p>3. Which planet is known as the Red Planet?</p>
+      <label><input type="radio" name="q3" value="Mars"> Mars</label>
+      <label><input type="radio" name="q3" value="Earth"> Earth</label>
+      <label><input type="radio" name="q3" value="Venus"> Venus</label>
+    </div>
+
+    <div class="question">
+      <p>4. HTML stands for?</p>
+      <label><input type="radio" name="q4" value="HyperText Markup Language"> HyperText Markup Language</label>
+      <label><input type="radio" name="q4" value="Home Tool Markup Language"> Home Tool Markup Language</label>
+      <label><input type="radio" name="q4" value="Hyperlinks and Text Markup Language"> Hyperlinks and Text Markup Language</label>
+    </div>
+
+    <div class="question">
+      <p>5. Which is the largest ocean?</p>
+      <label><input type="radio" name="q5" value="Pacific"> Pacific</label>
+      <label><input type="radio" name="q5" value="Atlantic"> Atlantic</label>
+      <label><input type="radio" name="q5" value="Indian"> Indian</label>
+    </div>
+
+    <button type="submit">Submit</button>
+  </form>
+
+  <div class="result" id="result"></div>
+
+  <script>
+    const answers = {
+      q1: "Paris",
+      q2: "4",
+      q3: "Mars",
+      q4: "HyperText Markup Language",
+      q5: "Pacific"
+    };
+
+    document.getElementById("examForm").addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      let score = 0;
+      for (let key in answers) {
+        const selected = document.querySelector(`input[name="${key}"]:checked`);
+        if (selected && selected.value === answers[key]) {
+          score++;
+        }
+      }
+
+      const name = document.getElementById("name").value.trim();
+      const regNo = document.getElementById("regNo").value.trim();
+
+      document.getElementById("result").innerHTML =
+        `Name: ${name} <br> Register Number: ${regNo} <br> Marks: ${score}/5`;
+    });
+  </script>
+
+</body>
+</html>
